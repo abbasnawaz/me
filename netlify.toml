@@ -1,0 +1,7 @@
+[build]
+  publish = "ui_kits/portfolio"
+
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200

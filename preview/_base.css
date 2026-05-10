@@ -1,0 +1,47 @@
+/* Shared base for preview cards. Each card is a self-contained 700×N px artifact. */
+@import url('../colors_and_type.css');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  width: 700px;
+  padding: 24px 28px;
+  background: var(--bg-base);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.card .row { display: flex; align-items: center; gap: 16px; }
+.card .col { display: flex; flex-direction: column; gap: 8px; }
+.card .grid { display: grid; gap: 12px; }
+
+.swatch {
+  width: 100%;
+  aspect-ratio: 1.6 / 1;
+  border-radius: 12px;
+  border: 1px solid var(--border-default);
+  box-shadow: var(--inner-highlight);
+  position: relative;
+  overflow: hidden;
+}
+
+.swatch.tall { aspect-ratio: 1.3 / 1; }
+
+.swatch-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--fg-tertiary);
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.swatch-label .name { color: var(--fg-secondary); }
+.swatch-label .val  { color: var(--fg-tertiary); }

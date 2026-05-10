@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"></head>
+<body>
+<div class="card" style="height: 260px;">
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <!-- default card -->
+    <div style="padding: 20px; background:#0E0F12; border:1px solid rgba(255,255,255,0.06); border-radius: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); position:relative;">
+      <div style="font-family: var(--font-mono); font-size:11px; color:#6B6E76; letter-spacing:0.18em; text-transform:uppercase;">PROJECT</div>
+      <div style="font-size: 20px; color:#F5F5F7; letter-spacing: -0.015em; margin-top: 8px;">Weapon detection model</div>
+      <div style="font-size: 13px; color:#A1A1A9; margin-top: 8px; line-height: 1.5;">YOLOv8 fine-tuned on CCTV footage. Deployed across 3 cities, &lt;200ms latency.</div>
+      <div style="display:flex; gap:6px; margin-top: 14px;">
+        <span style="padding:4px 9px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:999px; font-family: var(--font-mono); font-size:10px; color:#A1A1A9;">PyTorch</span>
+        <span style="padding:4px 9px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:999px; font-family: var(--font-mono); font-size:10px; color:#A1A1A9;">OpenCV</span>
+      </div>
+    </div>
+    <!-- hover card -->
+    <div style="padding: 20px; background:#0E0F12; border:1px solid rgba(255,255,255,0.12); border-radius: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.10); position:relative;">
+      <div style="position:absolute; top:0; left:16px; right:16px; height:1px; background: linear-gradient(90deg, transparent, #A78BFA 30%, #67E8F9 70%, transparent);"></div>
+      <div style="font-family: var(--font-mono); font-size:11px; color:#A1A1A9; letter-spacing:0.18em; text-transform:uppercase;">PROJECT · HOVER</div>
+      <div style="font-size: 20px; color:#F5F5F7; letter-spacing: -0.015em; margin-top: 8px;">Multimodal RAG system</div>
+      <div style="font-size: 13px; color:#A1A1A9; margin-top: 8px; line-height: 1.5;">Vision + text retrieval over 1M docs. Sub-second queries via Qdrant.</div>
+      <div style="display:flex; gap:6px; margin-top: 14px;">
+        <span style="padding:4px 9px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:999px; font-family: var(--font-mono); font-size:10px; color:#A1A1A9;">LangChain</span>
+        <span style="padding:4px 9px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:999px; font-family: var(--font-mono); font-size:10px; color:#A1A1A9;">Qdrant</span>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 14px; font-family: var(--font-mono); font-size: 11px; color: #6B6E76;">12px radius · 1px hairline border · inner highlight · iridescent edge line on hover</div>
+</div>
+</body></html>
