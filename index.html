@@ -85,7 +85,7 @@ nav.s{background:rgba(3,3,8,.9);backdrop-filter:blur(24px);
   width:800px;height:800px;
   background:radial-gradient(circle,rgba(99,102,241,.09) 0%,transparent 68%);
   top:50%;left:50%;transform:translate(-50%,-50%)}
-.hcon{position:relative;z-index:2;text-align:center;padding:2rem 1.5rem;max-width:1100px}
+.hcon{position:relative;z-index:2;text-align:center;padding:2rem 1.5rem;width:100%;max-width:1200px}
 
 .havail{display:inline-flex;align-items:center;gap:.6rem;
   padding:.4rem 1.1rem;border-radius:4px;
@@ -98,10 +98,10 @@ nav.s{background:rgba(3,3,8,.9);backdrop-filter:blur(24px);
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
 .hero-name{font-family:var(--fh);font-weight:800;
-  font-size:clamp(3.2rem,9vw,8rem);
+  font-size:clamp(2.8rem,10.5vw,8rem);
   line-height:.96;letter-spacing:-.04em;
   margin-bottom:1.8rem}
-.hero-name .ln{display:block;overflow:hidden}
+.hero-name .ln{display:block;overflow:hidden;width:100%}
 .hero-name .ln span{display:block}
 .hero-name .ln:nth-child(2) span{
   background:linear-gradient(135deg,var(--in2),var(--cy));
@@ -344,7 +344,7 @@ footer p{font-size:.8rem;color:var(--mu)}
   footer{padding:2rem;text-align:center;justify-content:center;flex-direction:column}
 }
 @media(max-width:600px){
-  .hero-name{font-size:clamp(3.5rem,15vw,5rem)}
+  .hero-name{font-size:clamp(2.2rem,10.5vw,5rem)}
   .svcgrid{grid-template-columns:1fr}
   .skgrid{grid-template-columns:1fr}
   .hbtns{flex-direction:column;align-items:center}
