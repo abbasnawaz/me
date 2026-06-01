@@ -10,7 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js" crossorigin="anonymous"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/three@0.165.0/build/three.min.js';
+      document.head.appendChild(s);
+    }
+  </script>
 
   <style>
     /* ─── Reset & Base ───────────────────────────────────── */
@@ -1071,10 +1078,10 @@
     });
 
     /* ── Three.js Hero Scene ─────────────────────────────────── */
-    (function initThree() {
-      if (typeof THREE === 'undefined') return;
+    function initThree() {
+      if (typeof THREE === 'undefined') { setTimeout(initThree, 80); return; }
       const canvas = document.getElementById('hero-canvas');
-      const W = canvas.offsetWidth, H = canvas.offsetHeight;
+      const W = window.innerWidth, H = window.innerHeight;
 
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -1165,12 +1172,13 @@
 
       /* Resize */
       window.addEventListener('resize', () => {
-        const W2 = canvas.offsetWidth, H2 = canvas.offsetHeight;
+        const W2 = window.innerWidth, H2 = window.innerHeight;
         camera.aspect = W2 / H2;
         camera.updateProjectionMatrix();
         renderer.setSize(W2, H2);
       });
-    })();
+    }
+    initThree();
   </script>
 </body>
 </html>
