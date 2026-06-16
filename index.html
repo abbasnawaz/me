@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" crossorigin="anonymous"></script>
-  <script>if(typeof THREE==='undefined'){document.write('<script src="https://unpkg.com/three@0.165.0/build/three.min.js"><\/script>')}</script>
+  <script>if(typeof THREE==='undefined'){document.write('<script src="https://unpkg.com/three@0.159.0/build/three.min.js"><\/script>')}</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -766,8 +766,11 @@ document.querySelectorAll('.hbtn,.nhire').forEach(b=>{
   b.addEventListener('mouseleave',()=>b.style.transform='')});
 
 /* ─── THREE.JS Neural Network ────────────────────────── */
+let _t3dTries=0;
 function initThree(){
-  if(typeof THREE==='undefined'){setTimeout(initThree,100);return}
+  if(typeof THREE==='undefined'){
+    if(_t3dTries++>60)return; /* give up after ~6s; page still works fine */
+    setTimeout(initThree,100);return}
   const canvas=document.getElementById('hcanvas');
   const W=window.innerWidth,H=window.innerHeight;
   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
@@ -784,10 +787,10 @@ function initThree(){
 
   /* Nodes */
   const nodes=[];
-  const nodeGeo=new THREE.SphereGeometry(.065,10,8);
+  const nodeGeo=new THREE.SphereGeometry(.075,12,10);
   for(let i=0;i<NODE_COUNT;i++){
-    const col=new THREE.Color().setHSL(.65+Math.random()*.12,.8,.62+Math.random()*.15);
-    const mesh=new THREE.Mesh(nodeGeo,new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.9}));
+    const col=new THREE.Color().setHSL(.6+Math.random()*.14,.85,.66+Math.random()*.16);
+    const mesh=new THREE.Mesh(nodeGeo,new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:1}));
     mesh.position.set((Math.random()-.5)*SPREAD[0],(Math.random()-.5)*SPREAD[1],(Math.random()-.5)*SPREAD[2]);
     mesh.userData={
       vel:new THREE.Vector3((Math.random()-.5)*.007,(Math.random()-.5)*.007,(Math.random()-.5)*.004),
@@ -796,7 +799,7 @@ function initThree(){
 
   /* Glow spheres */
   const glowGeo=new THREE.SphereGeometry(.18,8,6);
-  const glowMat=new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.06});
+  const glowMat=new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.11});
   nodes.forEach(n=>{const g=new THREE.Mesh(glowGeo,glowMat.clone());g.position.copy(n.position);n.userData.glow=g;scene.add(g)});
 
   /* Connections (pre-allocated buffer) */
@@ -807,7 +810,7 @@ function initThree(){
   const connGeo=new THREE.BufferGeometry();
   connGeo.setAttribute('position',connAttr);
   connGeo.setDrawRange(0,0);
-  const connMat=new THREE.LineBasicMaterial({color:0x6366F1,transparent:true,opacity:.22});
+  const connMat=new THREE.LineBasicMaterial({color:0x818CF8,transparent:true,opacity:.34});
   scene.add(new THREE.LineSegments(connGeo,connMat));
 
   /* Data flow particles */
@@ -826,7 +829,7 @@ function initThree(){
   const P=1500;const pPos=new Float32Array(P*3);
   for(let i=0;i<P;i++){pPos[i*3]=(Math.random()-.5)*28;pPos[i*3+1]=(Math.random()-.5)*18;pPos[i*3+2]=(Math.random()-.5)*12}
   const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-  scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({size:.018,color:0x334155,transparent:true,opacity:.6})));
+  scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({size:.02,color:0x4B5573,transparent:true,opacity:.72})));
 
   /* Mouse */
   let mX=0,mY=0,tX=0,tY=0;
