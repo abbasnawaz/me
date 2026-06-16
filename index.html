@@ -7,12 +7,12 @@
   <meta name="description" content="Muhammad Abbas — Data Scientist, ML Researcher & AI Engineer. Islamabad, Pakistan."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" crossorigin="anonymous"></script>
-  <script>if(typeof THREE==='undefined'){document.write('<script src="https://unpkg.com/three@0.165.0/build/three.min.js"><\/script>')}</script>
+  <script>if(typeof THREE==='undefined'){document.write('<script src="https://unpkg.com/three@0.159.0/build/three.min.js"><\/script>')}</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -21,7 +21,7 @@
   --in:#6366F1;--in2:#818CF8;--cy:#22D3EE;--pu:#A78BFA;
   --gr:#10B981;--am:#F59E0B;
   --w:#F8FAFC;--g:#94A3B8;--mu:#334155;
-  --fh:'Syne',system-ui,sans-serif;
+  --fh:'Sora',system-ui,sans-serif;
   --fg:'Space Grotesk',system-ui,sans-serif;
   --fb:'Inter',system-ui,sans-serif;
 }
@@ -80,41 +80,42 @@ nav.s{background:rgba(3,3,8,.9);backdrop-filter:blur(24px);
 
 /* ── HERO ── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#hcanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+#hcanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;cursor:grab}
+#hcanvas:active{cursor:grabbing}
 .hglow{position:absolute;z-index:1;pointer-events:none;
-  width:800px;height:800px;
-  background:radial-gradient(circle,rgba(99,102,241,.09) 0%,transparent 68%);
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(99,102,241,.13) 0%,transparent 62%);
   top:50%;left:50%;transform:translate(-50%,-50%)}
-.hcon{position:relative;z-index:2;text-align:center;padding:2rem 1.5rem;max-width:1100px}
+.hcon{position:relative;z-index:2;text-align:center;padding:2rem 1.5rem;width:100%;max-width:1200px}
 
 .havail{display:inline-flex;align-items:center;gap:.6rem;
   padding:.4rem 1.1rem;border-radius:4px;
   background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
   font-family:var(--fg);font-size:.72rem;font-weight:600;
   color:var(--gr);letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:2.2rem;opacity:0}
+  margin-bottom:2.2rem}
 .havail-dot{width:6px;height:6px;border-radius:50%;background:var(--gr);
   box-shadow:0 0 8px var(--gr);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
 .hero-name{font-family:var(--fh);font-weight:800;
-  font-size:clamp(4rem,12vw,9.5rem);
-  line-height:.95;letter-spacing:-.05em;
+  font-size:clamp(2.4rem,7vw,5.6rem);
+  line-height:1.02;letter-spacing:-.035em;
   margin-bottom:1.8rem}
-.hero-name .ln{display:block;overflow:hidden}
-.hero-name .ln span{display:block;transform:translateY(110%)}
+.hero-name .ln{display:block;overflow:hidden;width:100%}
+.hero-name .ln span{display:block}
 .hero-name .ln:nth-child(2) span{
   background:linear-gradient(135deg,var(--in2),var(--cy));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-.hero-sub{font-family:var(--fg);font-size:clamp(1rem,2vw,1.2rem);
-  color:var(--g);font-weight:400;margin-bottom:2.8rem;opacity:0}
+.hero-sub{font-family:var(--fg);font-size:clamp(1rem,2vw,1.15rem);
+  color:var(--g);font-weight:400;margin-bottom:2.8rem}
 .hero-sub .rt{color:var(--cy);font-weight:500}
 .hero-cur{display:inline-block;width:2px;height:1em;background:var(--cy);
   margin-left:2px;vertical-align:middle;animation:blink .7s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-.hbtns{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;opacity:0}
+.hbtns{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
 .hbtn{display:inline-flex;align-items:center;gap:.6rem;
   padding:.95rem 2.2rem;border-radius:10px;
   font-family:var(--fg);font-weight:700;font-size:.9rem;
@@ -127,7 +128,7 @@ nav.s{background:rgba(3,3,8,.9);backdrop-filter:blur(24px);
 .hbtn-g{background:transparent;color:var(--g);border:1px solid var(--border)}
 .hbtn-g:hover{color:var(--w);border-color:rgba(255,255,255,.2);transform:translateY(-3px)}
 
-.hsoc{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-top:2.5rem;opacity:0}
+.hsoc{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-top:2.5rem}
 .hsoc a{width:40px;height:40px;border-radius:8px;
   display:flex;align-items:center;justify-content:center;
   border:1px solid var(--border);color:var(--g);
@@ -136,7 +137,7 @@ nav.s{background:rgba(3,3,8,.9);backdrop-filter:blur(24px);
 .hsoc a:hover{color:var(--w);border-color:var(--in);background:rgba(99,102,241,.1);transform:translateY(-4px)}
 
 .scroll-ind{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
-  z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0}
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem}
 .scroll-ind span{font-family:var(--fg);font-size:.65rem;letter-spacing:3px;color:var(--mu);text-transform:uppercase}
 .scroll-ln{width:1px;height:48px;background:linear-gradient(to bottom,var(--in),transparent);
   animation:sline 1.6s ease-in-out infinite}
@@ -161,9 +162,9 @@ nav.s{background:rgba(3,3,8,.9);backdrop-filter:blur(24px);
   font-family:var(--fg);font-size:.68rem;font-weight:700;
   letter-spacing:3.5px;text-transform:uppercase;color:var(--in2);margin-bottom:1.4rem}
 .slabel::before{content:'';display:block;width:24px;height:1px;background:var(--in)}
-.sh{font-family:var(--fh);font-weight:800;
-  font-size:clamp(2.6rem,5vw,4.2rem);
-  line-height:.98;letter-spacing:-.04em;margin-bottom:1.2rem}
+.sh{font-family:var(--fh);font-weight:700;
+  font-size:clamp(2rem,4vw,3.2rem);
+  line-height:1.06;letter-spacing:-.03em;margin-bottom:1.2rem}
 .ssub{font-size:1.05rem;color:var(--g);max-width:520px;line-height:1.78}
 .tc{text-align:center}.tc .ssub{margin:0 auto}
 
@@ -322,29 +323,14 @@ footer p{font-size:.8rem;color:var(--mu)}
 #stbtn.on{opacity:1;visibility:visible}
 #stbtn:hover{background:var(--in);color:var(--w);transform:translateY(-4px);box-shadow:0 8px 24px rgba(99,102,241,.35)}
 
-/* ── Glitch ── */
-.glitch{position:relative}
-.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;
-  width:100%;overflow:hidden;font-family:inherit;font-size:inherit;font-weight:inherit;
-  -webkit-text-fill-color:var(--w);color:var(--w)}
-.glitch::before{left:-2px;text-shadow:-2px 0 var(--in);clip:rect(44px,450px,56px,0);
-  animation:glitch1 4s infinite linear alternate-reverse}
-.glitch::after{left:2px;text-shadow:2px 0 var(--cy);clip:rect(24px,450px,36px,0);
-  animation:glitch2 4s infinite linear alternate-reverse}
-@keyframes glitch1{
-  0%{clip:rect(42px,9999px,44px,0);transform:skew(.5deg)}
-  20%{clip:rect(12px,9999px,59px,0)}
-  40%{clip:rect(85px,9999px,90px,0);transform:skew(-.3deg)}
-  60%{clip:rect(64px,9999px,68px,0)}
-  80%{clip:rect(33px,9999px,35px,0)}
-  100%{clip:rect(70px,9999px,80px,0)}}
-@keyframes glitch2{
-  0%{clip:rect(65px,9999px,67px,0);transform:skew(-.4deg)}
-  20%{clip:rect(30px,9999px,34px,0)}
-  40%{clip:rect(54px,9999px,57px,0);transform:skew(.3deg)}
-  60%{clip:rect(78px,9999px,82px,0)}
-  80%{clip:rect(18px,9999px,21px,0)}
-  100%{clip:rect(45px,9999px,49px,0)}}
+/* ── Subtle flicker on name ── */
+.glitch{animation:nameFlicker 8s ease-in-out infinite}
+@keyframes nameFlicker{
+  0%,90%,100%{opacity:1}
+  92%{opacity:.85}
+  94%{opacity:1}
+  96%{opacity:.9}
+  98%{opacity:1}}
 
 /* ── Responsive ── */
 @media(max-width:960px){
@@ -359,7 +345,7 @@ footer p{font-size:.8rem;color:var(--mu)}
   footer{padding:2rem;text-align:center;justify-content:center;flex-direction:column}
 }
 @media(max-width:600px){
-  .hero-name{font-size:clamp(3.5rem,15vw,5rem)}
+  .hero-name{font-size:clamp(2.2rem,9vw,3.4rem)}
   .svcgrid{grid-template-columns:1fr}
   .skgrid{grid-template-columns:1fr}
   .hbtns{flex-direction:column;align-items:center}
@@ -402,7 +388,7 @@ footer p{font-size:.8rem;color:var(--mu)}
       <div class="havail-dot"></div>Available for Projects
     </div>
     <h1 class="hero-name">
-      <span class="ln"><span class="glitch" data-text="MUHAMMAD">MUHAMMAD</span></span>
+      <span class="ln"><span class="glitch">MUHAMMAD</span></span>
       <span class="ln"><span>ABBAS</span></span>
     </h1>
     <p class="hero-sub" id="hsub">
@@ -416,7 +402,6 @@ footer p{font-size:.8rem;color:var(--mu)}
       <a href="https://github.com/abbasnawaz" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
       <a href="https://www.linkedin.com/in/muhammad-abbas-373b721b8/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       <a href="mailto:abbasnawaz125@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-      <a href="tel:+923219704177" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
   </div>
   <div class="scroll-ind" id="sind">
@@ -613,9 +598,6 @@ footer p{font-size:.8rem;color:var(--mu)}
         <div class="ctico" style="background:rgba(167,139,250,.1);color:var(--pu)"><i class="fas fa-envelope"></i></div>
         <div><div class="ctlb">Email</div><div class="ctv">abbasnawaz125@gmail.com</div></div>
       </a>
-      <a href="tel:+923219704177" class="ctrow">
-        <div class="ctico" style="background:rgba(16,185,129,.1);color:var(--gr)"><i class="fab fa-whatsapp"></i></div>
-        <div><div class="ctlb">WhatsApp</div><div class="ctv">+92 321 970 4177</div></div>
       </a>
       <div class="ctrow">
         <div class="ctico" style="background:rgba(34,211,238,.1);color:var(--cy)"><i class="fas fa-map-marker-alt"></i></div>
@@ -709,15 +691,18 @@ function typeR(){
   setTimeout(typeR,del?38:68)}
 setTimeout(typeR,1800);
 
-/* ─── Hero entry animations (GSAP) ──────────────────── */
+/* ─── Hero entry animations (GSAP — progressive enhancement) ── */
 function heroAnims(){
   if(typeof gsap==='undefined')return;
-  gsap.to('.ln span',{y:0,duration:1.1,stagger:.12,ease:'power4.out',delay:.3});
-  gsap.to('#havail',{opacity:1,y:0,duration:.8,ease:'power3.out',delay:.1});
-  gsap.to('#hsub',{opacity:1,y:0,duration:.8,ease:'power3.out',delay:.7});
-  gsap.to('#hbtns',{opacity:1,y:0,duration:.8,ease:'power3.out',delay:.9});
-  gsap.to('#hsoc',{opacity:1,y:0,duration:.8,ease:'power3.out',delay:1.1});
-  gsap.to('#sind',{opacity:1,duration:1,ease:'power2.out',delay:1.8});
+  /* Set initial hidden state only if GSAP is available */
+  gsap.set('.ln span',{y:'108%'});
+  gsap.set(['#havail','#hsub','#hbtns','#hsoc'],{opacity:0,y:16});
+  /* Animate in */
+  gsap.to('.ln span',{y:0,duration:1.05,stagger:.13,ease:'power4.out',delay:.2});
+  gsap.to('#havail',{opacity:1,y:0,duration:.7,ease:'power3.out',delay:.1});
+  gsap.to('#hsub',  {opacity:1,y:0,duration:.7,ease:'power3.out',delay:.65});
+  gsap.to('#hbtns', {opacity:1,y:0,duration:.7,ease:'power3.out',delay:.85});
+  gsap.to('#hsoc',  {opacity:1,y:0,duration:.7,ease:'power3.out',delay:1.05});
 }
 window.addEventListener('load',heroAnims);
 
@@ -777,143 +762,181 @@ document.querySelectorAll('.hbtn,.nhire').forEach(b=>{
     b.style.transform=`translate(${x}px,${y}px) translateY(-3px)`});
   b.addEventListener('mouseleave',()=>b.style.transform='')});
 
-/* ─── THREE.JS Neural Network ────────────────────────── */
+/* ─── THREE.JS Interactive AI Core ──────────────────── */
+let _t3dTries=0;
 function initThree(){
-  if(typeof THREE==='undefined'){setTimeout(initThree,100);return}
+  if(typeof THREE==='undefined'){
+    if(_t3dTries++>60)return;
+    setTimeout(initThree,100);return}
+
   const canvas=document.getElementById('hcanvas');
   const W=window.innerWidth,H=window.innerHeight;
+  const isMob=W<768;
   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   renderer.setSize(W,H);
+
   const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(60,W/H,.1,100);
-  camera.position.set(0,0,7);
+  const camera=new THREE.PerspectiveCamera(52,W/H,.1,100);
+  camera.position.z=isMob?8.5:7;
 
-  const isMob=W<768;
-  const NODE_COUNT=isMob?35:65;
-  const MAX_DIST=isMob?2.2:2.8;
-  const SPREAD=[isMob?7:11,isMob?4:6,isMob?3:4];
+  /* ── Master group (user rotates this) ── */
+  const grp=new THREE.Group();
+  scene.add(grp);
 
-  /* Nodes */
-  const nodes=[];
-  const nodeGeo=new THREE.SphereGeometry(.065,10,8);
-  for(let i=0;i<NODE_COUNT;i++){
-    const col=new THREE.Color().setHSL(.65+Math.random()*.12,.8,.62+Math.random()*.15);
-    const mesh=new THREE.Mesh(nodeGeo,new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.9}));
-    mesh.position.set((Math.random()-.5)*SPREAD[0],(Math.random()-.5)*SPREAD[1],(Math.random()-.5)*SPREAD[2]);
-    mesh.userData={
-      vel:new THREE.Vector3((Math.random()-.5)*.007,(Math.random()-.5)*.007,(Math.random()-.5)*.004),
-      phase:Math.random()*Math.PI*2,speed:.018+Math.random()*.012};
-    scene.add(mesh);nodes.push(mesh)}
+  /* ── Inner core: solid tinted sphere ── */
+  const coreM=new THREE.Mesh(
+    new THREE.SphereGeometry(.52,32,24),
+    new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.18}));
+  grp.add(coreM);
 
-  /* Glow spheres */
-  const glowGeo=new THREE.SphereGeometry(.18,8,6);
-  const glowMat=new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.06});
-  nodes.forEach(n=>{const g=new THREE.Mesh(glowGeo,glowMat.clone());g.position.copy(n.position);n.userData.glow=g;scene.add(g)});
+  /* ── Core wireframe shell ── */
+  grp.add(new THREE.Mesh(
+    new THREE.SphereGeometry(.54,18,14),
+    new THREE.MeshBasicMaterial({color:0x818CF8,wireframe:true,transparent:true,opacity:.45})));
 
-  /* Connections (pre-allocated buffer) */
-  const MAX_SEGS=NODE_COUNT*(NODE_COUNT-1)/2;
-  const connPos=new Float32Array(MAX_SEGS*6);
-  const connAttr=new THREE.BufferAttribute(connPos,3);
-  connAttr.setUsage(THREE.DynamicDrawUsage);
-  const connGeo=new THREE.BufferGeometry();
-  connGeo.setAttribute('position',connAttr);
-  connGeo.setDrawRange(0,0);
-  const connMat=new THREE.LineBasicMaterial({color:0x6366F1,transparent:true,opacity:.22});
-  scene.add(new THREE.LineSegments(connGeo,connMat));
+  /* ── Mid geodesic shell ── */
+  grp.add(new THREE.Mesh(
+    new THREE.IcosahedronGeometry(.9,1),
+    new THREE.MeshBasicMaterial({color:0x6366F1,wireframe:true,transparent:true,opacity:.15})));
 
-  /* Data flow particles */
-  const MAX_FLOW=20;
-  const flowData=[];
-  const flowPos=new Float32Array(MAX_FLOW*3);
-  const flowAttr=new THREE.BufferAttribute(flowPos,3);
-  flowAttr.setUsage(THREE.DynamicDrawUsage);
-  const flowGeo=new THREE.BufferGeometry();
-  flowGeo.setAttribute('position',flowAttr);
-  flowGeo.setDrawRange(0,0);
-  const flowMat=new THREE.PointsMaterial({size:.1,color:0x22D3EE,transparent:true,opacity:.85,sizeAttenuation:true});
-  scene.add(new THREE.Points(flowGeo,flowMat));
+  /* ── Outer glow halo ── */
+  grp.add(new THREE.Mesh(
+    new THREE.SphereGeometry(1.1,16,12),
+    new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.04})));
 
-  /* Particle background field */
-  const P=1500;const pPos=new Float32Array(P*3);
-  for(let i=0;i<P;i++){pPos[i*3]=(Math.random()-.5)*28;pPos[i*3+1]=(Math.random()-.5)*18;pPos[i*3+2]=(Math.random()-.5)*12}
-  const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-  scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({size:.018,color:0x334155,transparent:true,opacity:.6})));
+  /* ── Orbital rings with electron particles ── */
+  const ringDefs=[
+    {r:1.55,tilt:[0,0,0],           col:0x6366F1,spd:.009,  eCnt:3},
+    {r:1.88,tilt:[1.1,.55,0],       col:0x22D3EE,spd:-.006, eCnt:2},
+    {r:2.15,tilt:[Math.PI/2,.3,.5], col:0xA78BFA,spd:.004,  eCnt:2},
+    {r:1.72,tilt:[-.7,1.05,0],      col:0x818CF8,spd:-.008, eCnt:2},
+  ];
+  const electrons=[];
+  ringDefs.forEach(d=>{
+    /* Ring group carries the tilt; we spin it on Z */
+    const rg=new THREE.Group();
+    rg.rotation.set(...d.tilt);
+    rg.userData.spd=d.spd*.28;
+    grp.add(rg);
+    electrons.push(rg);
 
-  /* Mouse */
-  let mX=0,mY=0,tX=0,tY=0;
-  document.addEventListener('mousemove',e=>{mX=(e.clientX/W)*2-1;mY=-(e.clientY/H)*2+1});
+    /* Torus line */
+    rg.add(new THREE.Mesh(
+      new THREE.TorusGeometry(d.r,.007,8,128),
+      new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:.6})));
 
-  let frame=0;
-  function animate(){
-    requestAnimationFrame(animate);frame++;
-    tX+=(mX*.7-tX)*.04;tY+=(mY*.45-tY)*.04;
+    /* Electron spheres orbit within the ring's XY plane */
+    for(let i=0;i<d.eCnt;i++){
+      const eg=new THREE.Group();
+      eg.userData={angle:(i/d.eCnt)*Math.PI*2,r:d.r,spd:d.spd*2.8};
+      rg.add(eg);
+      electrons.push(eg);
 
-    let segCount=0;
-    const posArr=connAttr.array;
+      const dot=new THREE.Mesh(
+        new THREE.SphereGeometry(.058,8,6),
+        new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:1}));
+      dot.position.x=d.r;
+      eg.add(dot);
 
-    nodes.forEach((n,i)=>{
-      n.userData.phase+=n.userData.speed;
-      n.position.addScaledVector(n.userData.vel,1);
+      /* Glow around electron */
+      const glow=new THREE.Mesh(
+        new THREE.SphereGeometry(.16,6,5),
+        new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:.14}));
+      glow.position.x=d.r;
+      eg.add(glow);
+    }
+  });
 
-      /* Bounce */
-      if(Math.abs(n.position.x)>SPREAD[0]/2+.5){n.userData.vel.x*=-.95;n.position.x=Math.sign(n.position.x)*(SPREAD[0]/2+.5)}
-      if(Math.abs(n.position.y)>SPREAD[1]/2+.5){n.userData.vel.y*=-.95}
-      if(Math.abs(n.position.z)>SPREAD[2]/2+.5){n.userData.vel.z*=-.95}
+  /* ── Data particle cloud around core ── */
+  const DP=80;
+  const dpArr=new Float32Array(DP*3);
+  const dpPhase=new Float32Array(DP);
+  const dpBase=new Float32Array(DP*3);
+  for(let i=0;i<DP;i++){
+    const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+    const r=1.15+Math.random()*.65;
+    dpArr[i*3]=dpBase[i*3]=r*Math.sin(ph)*Math.cos(th);
+    dpArr[i*3+1]=dpBase[i*3+1]=r*Math.sin(ph)*Math.sin(th);
+    dpArr[i*3+2]=dpBase[i*3+2]=r*Math.cos(ph);
+    dpPhase[i]=Math.random()*Math.PI*2;
+  }
+  const dpGeo=new THREE.BufferGeometry();
+  dpGeo.setAttribute('position',new THREE.BufferAttribute(dpArr,3));
+  grp.add(new THREE.Points(dpGeo,
+    new THREE.PointsMaterial({size:.032,color:0x22D3EE,transparent:true,opacity:.75,sizeAttenuation:true})));
 
-      /* Mouse repulsion */
-      const mx3=mX*5,my3=mY*3;
-      const dx=n.position.x-mx3,dy=n.position.y-my3;
-      const d2=dx*dx+dy*dy;
-      if(d2<4){const f=.003/Math.max(d2,.1);n.userData.vel.x+=dx*f;n.userData.vel.y+=dy*f}
+  /* ── Background starfield ── */
+  const SP=1800,sArr=new Float32Array(SP*3);
+  for(let i=0;i<SP;i++){sArr[i*3]=(Math.random()-.5)*32;sArr[i*3+1]=(Math.random()-.5)*22;sArr[i*3+2]=(Math.random()-.5)*16}
+  const sGeo=new THREE.BufferGeometry();
+  sGeo.setAttribute('position',new THREE.BufferAttribute(sArr,3));
+  scene.add(new THREE.Points(sGeo,new THREE.PointsMaterial({size:.022,color:0x4B5573,transparent:true,opacity:.7})));
 
-      /* Damp */
-      n.userData.vel.multiplyScalar(.992);
+  /* ── Drag-to-rotate interaction ── */
+  let drag=false,lx=0,ly=0,vx=0,vy=0;
+  const dn=e=>{drag=true;const t=e.touches?e.touches[0]:e;lx=t.clientX;ly=t.clientY};
+  const up=()=>drag=false;
+  const mv=e=>{
+    if(!drag)return;
+    const t=e.touches?e.touches[0]:e;
+    vy+=(t.clientX-lx)*.005;vx+=(t.clientY-ly)*.005;
+    lx=t.clientX;ly=t.clientY;
+    if(e.touches)e.preventDefault()};
+  canvas.addEventListener('mousedown',dn);
+  document.addEventListener('mouseup',up);
+  document.addEventListener('mousemove',mv);
+  canvas.addEventListener('touchstart',dn,{passive:false});
+  canvas.addEventListener('touchend',up);
+  canvas.addEventListener('touchmove',mv,{passive:false});
 
-      /* Pulse */
-      const s=1+.25*Math.sin(n.userData.phase);
-      n.scale.setScalar(s);
-      if(n.userData.glow){n.userData.glow.position.copy(n.position);n.userData.glow.scale.setScalar(s*.8)}
+  /* ── Animate ── */
+  let fr=0;
+  (function animate(){
+    requestAnimationFrame(animate);fr++;
 
-      /* Connections */
-      for(let j=i+1;j<nodes.length;j++){
-        const dist=n.position.distanceTo(nodes[j].position);
-        if(dist<MAX_DIST){
-          const idx=segCount*6;
-          posArr[idx]=n.position.x;posArr[idx+1]=n.position.y;posArr[idx+2]=n.position.z;
-          posArr[idx+3]=nodes[j].position.x;posArr[idx+4]=nodes[j].position.y;posArr[idx+5]=nodes[j].position.z;
-          segCount++;if(segCount*6>=MAX_SEGS*6)break}}
-      if(segCount*6>=MAX_SEGS*6)return});
+    /* Apply user drag, dampen */
+    grp.rotation.x+=vx; grp.rotation.y+=vy;
+    vx*=.93; vy*=.93;
 
-    connAttr.needsUpdate=true;
-    connGeo.setDrawRange(0,segCount*2);
+    /* Auto slow rotation when idle */
+    if(!drag){grp.rotation.y+=.0022;grp.rotation.x+=.0004}
 
-    /* Data flow */
-    if(frame%45===0&&flowData.length<MAX_FLOW){
-      const a=nodes[Math.floor(Math.random()*nodes.length)];
-      const b=nodes[Math.floor(Math.random()*nodes.length)];
-      if(a!==b)flowData.push({a,b,t:0})}
+    /* Pulse core */
+    const pulse=1+.065*Math.sin(fr*.022);
+    coreM.scale.setScalar(pulse);
 
-    for(let k=flowData.length-1;k>=0;k--){
-      const fp=flowData[k];fp.t+=.022;
-      if(fp.t>=1){flowData.splice(k,1);continue}
-      const idx=k*3;
-      flowPos[idx]=fp.a.position.x+(fp.b.position.x-fp.a.position.x)*fp.t;
-      flowPos[idx+1]=fp.a.position.y+(fp.b.position.y-fp.a.position.y)*fp.t;
-      flowPos[idx+2]=fp.a.position.z+(fp.b.position.z-fp.a.position.z)*fp.t}
-    flowAttr.needsUpdate=true;
-    flowGeo.setDrawRange(0,flowData.length);
+    /* Spin rings + orbit electrons */
+    electrons.forEach(g=>{
+      if(g.userData.angle!==undefined){
+        /* electron group: orbit in its parent ring's plane */
+        g.userData.angle+=g.userData.spd;
+        g.rotation.z=g.userData.angle;
+      } else if(g.userData.spd!==undefined){
+        /* ring group: slow self-spin on Z */
+        g.rotation.z+=g.userData.spd;
+      }
+    });
 
-    /* Camera drift */
-    camera.position.x=tX*.5;
-    camera.position.y=tY*.35;
-    camera.lookAt(0,0,0);
-    renderer.render(scene,camera)}
+    /* Breathe data particles */
+    const pa=dpGeo.attributes.position.array;
+    for(let i=0;i<DP;i++){
+      dpPhase[i]+=.013;
+      const br=.045*Math.sin(dpPhase[i]);
+      const bx=dpBase[i*3],by=dpBase[i*3+1],bz=dpBase[i*3+2];
+      const len=Math.sqrt(bx*bx+by*by+bz*bz);
+      const s=(len+br)/len;
+      pa[i*3]=bx*s;pa[i*3+1]=by*s;pa[i*3+2]=bz*s;
+    }
+    dpGeo.attributes.position.needsUpdate=true;
 
-  animate();
+    renderer.render(scene,camera);
+  })();
+
   window.addEventListener('resize',()=>{
     const W2=window.innerWidth,H2=window.innerHeight;
-    camera.aspect=W2/H2;camera.updateProjectionMatrix();renderer.setSize(W2,H2)});
+    camera.aspect=W2/H2;camera.updateProjectionMatrix();renderer.setSize(W2,H2);
+    camera.position.z=W2<768?8.5:7});
 }
 initThree();
 </script>
