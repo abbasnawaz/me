@@ -80,10 +80,11 @@ nav.s{background:rgba(3,3,8,.9);backdrop-filter:blur(24px);
 
 /* ── HERO ── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#hcanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+#hcanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;cursor:grab}
+#hcanvas:active{cursor:grabbing}
 .hglow{position:absolute;z-index:1;pointer-events:none;
-  width:800px;height:800px;
-  background:radial-gradient(circle,rgba(99,102,241,.09) 0%,transparent 68%);
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(99,102,241,.13) 0%,transparent 62%);
   top:50%;left:50%;transform:translate(-50%,-50%)}
 .hcon{position:relative;z-index:2;text-align:center;padding:2rem 1.5rem;width:100%;max-width:1200px}
 
@@ -765,146 +766,181 @@ document.querySelectorAll('.hbtn,.nhire').forEach(b=>{
     b.style.transform=`translate(${x}px,${y}px) translateY(-3px)`});
   b.addEventListener('mouseleave',()=>b.style.transform='')});
 
-/* ─── THREE.JS Neural Network ────────────────────────── */
+/* ─── THREE.JS Interactive AI Core ──────────────────── */
 let _t3dTries=0;
 function initThree(){
   if(typeof THREE==='undefined'){
-    if(_t3dTries++>60)return; /* give up after ~6s; page still works fine */
+    if(_t3dTries++>60)return;
     setTimeout(initThree,100);return}
+
   const canvas=document.getElementById('hcanvas');
   const W=window.innerWidth,H=window.innerHeight;
+  const isMob=W<768;
   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   renderer.setSize(W,H);
+
   const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(60,W/H,.1,100);
-  camera.position.set(0,0,7);
+  const camera=new THREE.PerspectiveCamera(52,W/H,.1,100);
+  camera.position.z=isMob?8.5:7;
 
-  const isMob=W<768;
-  const NODE_COUNT=isMob?35:65;
-  const MAX_DIST=isMob?2.2:2.8;
-  const SPREAD=[isMob?7:11,isMob?4:6,isMob?3:4];
+  /* ── Master group (user rotates this) ── */
+  const grp=new THREE.Group();
+  scene.add(grp);
 
-  /* Nodes */
-  const nodes=[];
-  const nodeGeo=new THREE.SphereGeometry(.075,12,10);
-  for(let i=0;i<NODE_COUNT;i++){
-    const col=new THREE.Color().setHSL(.6+Math.random()*.14,.85,.66+Math.random()*.16);
-    const mesh=new THREE.Mesh(nodeGeo,new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:1}));
-    mesh.position.set((Math.random()-.5)*SPREAD[0],(Math.random()-.5)*SPREAD[1],(Math.random()-.5)*SPREAD[2]);
-    mesh.userData={
-      vel:new THREE.Vector3((Math.random()-.5)*.007,(Math.random()-.5)*.007,(Math.random()-.5)*.004),
-      phase:Math.random()*Math.PI*2,speed:.018+Math.random()*.012};
-    scene.add(mesh);nodes.push(mesh)}
+  /* ── Inner core: solid tinted sphere ── */
+  const coreM=new THREE.Mesh(
+    new THREE.SphereGeometry(.52,32,24),
+    new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.18}));
+  grp.add(coreM);
 
-  /* Glow spheres */
-  const glowGeo=new THREE.SphereGeometry(.18,8,6);
-  const glowMat=new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.11});
-  nodes.forEach(n=>{const g=new THREE.Mesh(glowGeo,glowMat.clone());g.position.copy(n.position);n.userData.glow=g;scene.add(g)});
+  /* ── Core wireframe shell ── */
+  grp.add(new THREE.Mesh(
+    new THREE.SphereGeometry(.54,18,14),
+    new THREE.MeshBasicMaterial({color:0x818CF8,wireframe:true,transparent:true,opacity:.45})));
 
-  /* Connections (pre-allocated buffer) */
-  const MAX_SEGS=NODE_COUNT*(NODE_COUNT-1)/2;
-  const connPos=new Float32Array(MAX_SEGS*6);
-  const connAttr=new THREE.BufferAttribute(connPos,3);
-  connAttr.setUsage(THREE.DynamicDrawUsage);
-  const connGeo=new THREE.BufferGeometry();
-  connGeo.setAttribute('position',connAttr);
-  connGeo.setDrawRange(0,0);
-  const connMat=new THREE.LineBasicMaterial({color:0x818CF8,transparent:true,opacity:.34});
-  scene.add(new THREE.LineSegments(connGeo,connMat));
+  /* ── Mid geodesic shell ── */
+  grp.add(new THREE.Mesh(
+    new THREE.IcosahedronGeometry(.9,1),
+    new THREE.MeshBasicMaterial({color:0x6366F1,wireframe:true,transparent:true,opacity:.15})));
 
-  /* Data flow particles */
-  const MAX_FLOW=20;
-  const flowData=[];
-  const flowPos=new Float32Array(MAX_FLOW*3);
-  const flowAttr=new THREE.BufferAttribute(flowPos,3);
-  flowAttr.setUsage(THREE.DynamicDrawUsage);
-  const flowGeo=new THREE.BufferGeometry();
-  flowGeo.setAttribute('position',flowAttr);
-  flowGeo.setDrawRange(0,0);
-  const flowMat=new THREE.PointsMaterial({size:.1,color:0x22D3EE,transparent:true,opacity:.85,sizeAttenuation:true});
-  scene.add(new THREE.Points(flowGeo,flowMat));
+  /* ── Outer glow halo ── */
+  grp.add(new THREE.Mesh(
+    new THREE.SphereGeometry(1.1,16,12),
+    new THREE.MeshBasicMaterial({color:0x6366F1,transparent:true,opacity:.04})));
 
-  /* Particle background field */
-  const P=1500;const pPos=new Float32Array(P*3);
-  for(let i=0;i<P;i++){pPos[i*3]=(Math.random()-.5)*28;pPos[i*3+1]=(Math.random()-.5)*18;pPos[i*3+2]=(Math.random()-.5)*12}
-  const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-  scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({size:.02,color:0x4B5573,transparent:true,opacity:.72})));
+  /* ── Orbital rings with electron particles ── */
+  const ringDefs=[
+    {r:1.55,tilt:[0,0,0],           col:0x6366F1,spd:.009,  eCnt:3},
+    {r:1.88,tilt:[1.1,.55,0],       col:0x22D3EE,spd:-.006, eCnt:2},
+    {r:2.15,tilt:[Math.PI/2,.3,.5], col:0xA78BFA,spd:.004,  eCnt:2},
+    {r:1.72,tilt:[-.7,1.05,0],      col:0x818CF8,spd:-.008, eCnt:2},
+  ];
+  const electrons=[];
+  ringDefs.forEach(d=>{
+    /* Ring group carries the tilt; we spin it on Z */
+    const rg=new THREE.Group();
+    rg.rotation.set(...d.tilt);
+    rg.userData.spd=d.spd*.28;
+    grp.add(rg);
+    electrons.push(rg);
 
-  /* Mouse */
-  let mX=0,mY=0,tX=0,tY=0;
-  document.addEventListener('mousemove',e=>{mX=(e.clientX/W)*2-1;mY=-(e.clientY/H)*2+1});
+    /* Torus line */
+    rg.add(new THREE.Mesh(
+      new THREE.TorusGeometry(d.r,.007,8,128),
+      new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:.6})));
 
-  let frame=0;
-  function animate(){
-    requestAnimationFrame(animate);frame++;
-    tX+=(mX*.7-tX)*.04;tY+=(mY*.45-tY)*.04;
+    /* Electron spheres orbit within the ring's XY plane */
+    for(let i=0;i<d.eCnt;i++){
+      const eg=new THREE.Group();
+      eg.userData={angle:(i/d.eCnt)*Math.PI*2,r:d.r,spd:d.spd*2.8};
+      rg.add(eg);
+      electrons.push(eg);
 
-    let segCount=0;
-    const posArr=connAttr.array;
+      const dot=new THREE.Mesh(
+        new THREE.SphereGeometry(.058,8,6),
+        new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:1}));
+      dot.position.x=d.r;
+      eg.add(dot);
 
-    nodes.forEach((n,i)=>{
-      n.userData.phase+=n.userData.speed;
-      n.position.addScaledVector(n.userData.vel,1);
+      /* Glow around electron */
+      const glow=new THREE.Mesh(
+        new THREE.SphereGeometry(.16,6,5),
+        new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:.14}));
+      glow.position.x=d.r;
+      eg.add(glow);
+    }
+  });
 
-      /* Bounce */
-      if(Math.abs(n.position.x)>SPREAD[0]/2+.5){n.userData.vel.x*=-.95;n.position.x=Math.sign(n.position.x)*(SPREAD[0]/2+.5)}
-      if(Math.abs(n.position.y)>SPREAD[1]/2+.5){n.userData.vel.y*=-.95}
-      if(Math.abs(n.position.z)>SPREAD[2]/2+.5){n.userData.vel.z*=-.95}
+  /* ── Data particle cloud around core ── */
+  const DP=80;
+  const dpArr=new Float32Array(DP*3);
+  const dpPhase=new Float32Array(DP);
+  const dpBase=new Float32Array(DP*3);
+  for(let i=0;i<DP;i++){
+    const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+    const r=1.15+Math.random()*.65;
+    dpArr[i*3]=dpBase[i*3]=r*Math.sin(ph)*Math.cos(th);
+    dpArr[i*3+1]=dpBase[i*3+1]=r*Math.sin(ph)*Math.sin(th);
+    dpArr[i*3+2]=dpBase[i*3+2]=r*Math.cos(ph);
+    dpPhase[i]=Math.random()*Math.PI*2;
+  }
+  const dpGeo=new THREE.BufferGeometry();
+  dpGeo.setAttribute('position',new THREE.BufferAttribute(dpArr,3));
+  grp.add(new THREE.Points(dpGeo,
+    new THREE.PointsMaterial({size:.032,color:0x22D3EE,transparent:true,opacity:.75,sizeAttenuation:true})));
 
-      /* Mouse repulsion */
-      const mx3=mX*5,my3=mY*3;
-      const dx=n.position.x-mx3,dy=n.position.y-my3;
-      const d2=dx*dx+dy*dy;
-      if(d2<4){const f=.003/Math.max(d2,.1);n.userData.vel.x+=dx*f;n.userData.vel.y+=dy*f}
+  /* ── Background starfield ── */
+  const SP=1800,sArr=new Float32Array(SP*3);
+  for(let i=0;i<SP;i++){sArr[i*3]=(Math.random()-.5)*32;sArr[i*3+1]=(Math.random()-.5)*22;sArr[i*3+2]=(Math.random()-.5)*16}
+  const sGeo=new THREE.BufferGeometry();
+  sGeo.setAttribute('position',new THREE.BufferAttribute(sArr,3));
+  scene.add(new THREE.Points(sGeo,new THREE.PointsMaterial({size:.022,color:0x4B5573,transparent:true,opacity:.7})));
 
-      /* Damp */
-      n.userData.vel.multiplyScalar(.992);
+  /* ── Drag-to-rotate interaction ── */
+  let drag=false,lx=0,ly=0,vx=0,vy=0;
+  const dn=e=>{drag=true;const t=e.touches?e.touches[0]:e;lx=t.clientX;ly=t.clientY};
+  const up=()=>drag=false;
+  const mv=e=>{
+    if(!drag)return;
+    const t=e.touches?e.touches[0]:e;
+    vy+=(t.clientX-lx)*.005;vx+=(t.clientY-ly)*.005;
+    lx=t.clientX;ly=t.clientY;
+    if(e.touches)e.preventDefault()};
+  canvas.addEventListener('mousedown',dn);
+  document.addEventListener('mouseup',up);
+  document.addEventListener('mousemove',mv);
+  canvas.addEventListener('touchstart',dn,{passive:false});
+  canvas.addEventListener('touchend',up);
+  canvas.addEventListener('touchmove',mv,{passive:false});
 
-      /* Pulse */
-      const s=1+.25*Math.sin(n.userData.phase);
-      n.scale.setScalar(s);
-      if(n.userData.glow){n.userData.glow.position.copy(n.position);n.userData.glow.scale.setScalar(s*.8)}
+  /* ── Animate ── */
+  let fr=0;
+  (function animate(){
+    requestAnimationFrame(animate);fr++;
 
-      /* Connections */
-      for(let j=i+1;j<nodes.length;j++){
-        const dist=n.position.distanceTo(nodes[j].position);
-        if(dist<MAX_DIST){
-          const idx=segCount*6;
-          posArr[idx]=n.position.x;posArr[idx+1]=n.position.y;posArr[idx+2]=n.position.z;
-          posArr[idx+3]=nodes[j].position.x;posArr[idx+4]=nodes[j].position.y;posArr[idx+5]=nodes[j].position.z;
-          segCount++;if(segCount*6>=MAX_SEGS*6)break}}
-      if(segCount*6>=MAX_SEGS*6)return});
+    /* Apply user drag, dampen */
+    grp.rotation.x+=vx; grp.rotation.y+=vy;
+    vx*=.93; vy*=.93;
 
-    connAttr.needsUpdate=true;
-    connGeo.setDrawRange(0,segCount*2);
+    /* Auto slow rotation when idle */
+    if(!drag){grp.rotation.y+=.0022;grp.rotation.x+=.0004}
 
-    /* Data flow */
-    if(frame%45===0&&flowData.length<MAX_FLOW){
-      const a=nodes[Math.floor(Math.random()*nodes.length)];
-      const b=nodes[Math.floor(Math.random()*nodes.length)];
-      if(a!==b)flowData.push({a,b,t:0})}
+    /* Pulse core */
+    const pulse=1+.065*Math.sin(fr*.022);
+    coreM.scale.setScalar(pulse);
 
-    for(let k=flowData.length-1;k>=0;k--){
-      const fp=flowData[k];fp.t+=.022;
-      if(fp.t>=1){flowData.splice(k,1);continue}
-      const idx=k*3;
-      flowPos[idx]=fp.a.position.x+(fp.b.position.x-fp.a.position.x)*fp.t;
-      flowPos[idx+1]=fp.a.position.y+(fp.b.position.y-fp.a.position.y)*fp.t;
-      flowPos[idx+2]=fp.a.position.z+(fp.b.position.z-fp.a.position.z)*fp.t}
-    flowAttr.needsUpdate=true;
-    flowGeo.setDrawRange(0,flowData.length);
+    /* Spin rings + orbit electrons */
+    electrons.forEach(g=>{
+      if(g.userData.angle!==undefined){
+        /* electron group: orbit in its parent ring's plane */
+        g.userData.angle+=g.userData.spd;
+        g.rotation.z=g.userData.angle;
+      } else if(g.userData.spd!==undefined){
+        /* ring group: slow self-spin on Z */
+        g.rotation.z+=g.userData.spd;
+      }
+    });
 
-    /* Camera drift */
-    camera.position.x=tX*.5;
-    camera.position.y=tY*.35;
-    camera.lookAt(0,0,0);
-    renderer.render(scene,camera)}
+    /* Breathe data particles */
+    const pa=dpGeo.attributes.position.array;
+    for(let i=0;i<DP;i++){
+      dpPhase[i]+=.013;
+      const br=.045*Math.sin(dpPhase[i]);
+      const bx=dpBase[i*3],by=dpBase[i*3+1],bz=dpBase[i*3+2];
+      const len=Math.sqrt(bx*bx+by*by+bz*bz);
+      const s=(len+br)/len;
+      pa[i*3]=bx*s;pa[i*3+1]=by*s;pa[i*3+2]=bz*s;
+    }
+    dpGeo.attributes.position.needsUpdate=true;
 
-  animate();
+    renderer.render(scene,camera);
+  })();
+
   window.addEventListener('resize',()=>{
     const W2=window.innerWidth,H2=window.innerHeight;
-    camera.aspect=W2/H2;camera.updateProjectionMatrix();renderer.setSize(W2,H2)});
+    camera.aspect=W2/H2;camera.updateProjectionMatrix();renderer.setSize(W2,H2);
+    camera.position.z=W2<768?8.5:7});
 }
 initThree();
 </script>
